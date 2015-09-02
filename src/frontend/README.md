@@ -1,17 +1,27 @@
 ### My configuration:
 * install nvm
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash
-    source ~/.nvm/nvm.sh
+```
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash
+source ~/.nvm/nvm.sh
+```
 * install **node** globally
-    nvm install 0.12
+```
+nvm install 0.12
+```
 * install **bower** globally
-    npm install bower -g
+```
+npm install bower -g
+```
 * install **ember-cli** globally
-    npm install ember-cli -g
+```
+npm install ember-cli -g
+```
 * clone repository and install dependencies
-    git clone user@host:git_repo/plantei.eu-ember.git
-    npm install
-    bower install
+```
+git clone user@host:git_repo/plantei.eu-ember.git
+npm install
+bower install
+```
 * start development server
     ember server
 
