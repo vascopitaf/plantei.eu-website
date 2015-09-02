@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  <div class="pageWrap">
+    <div class="jumbotron intro background-primary">
+      <div>
+      {{#if session.isAuthenticated}}
+        <a href="#" {{ action 'invalidateSession' }}>Logout</a>
+      {{!-- 
+      {{else}}
+        {{#link-to 'login'}}Login{{/link-to}}
+      --}}
+      {{/if}}
+      </div>
+
+      <div class="row lang">
+        <div class="pull-right">
+          <ul class="list-unstyled list-inline inline-block">
+            {{#each model as |lang|}} 
+            <li>
+              {{#if lang.active}}
+              <span class="text-muted">{{lang.lang}}</span>
+              {{else}}
+              <a href="#" {{action "chooselang" lang.lang}}>{{lang.lang}}</a>
+              {{/if}}
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+      <h1>
+        plantei.eu
+      </h1> 
+      {{outlet}}
+    </div>
+  </div>
+  <div class="container-fluid lmb">
+    <div class="row nml nmr">
+      <div class="col-md-4 mmt">
+        <h2>{{t "descriptionTitle1"}}</h2>
+        <p>{{t "descriptionContent1"}}</p>
+      </div>
+      <div class="col-md-4 mmt">
+        <h2>{{t "descriptionTitle2"}}</h2>
+        <p>{{t "descriptionContent2"}}</p>
+      </div>
+      <div class="col-md-4 mmt">
+        <h2>{{t "descriptionTitle3"}}</h2>
+        <p>{{t "descriptionContent3"}}</p>
+      </div>
+    </div>
+  </div>
+  <footer class="background-primary">
+    plantei.eu <a target="_blank" href="https://github.com/ecobytes/plantei.eu-website">source code</a> is developed under a <a href="https://raw.githubusercontent.com/ecobytes/plantei.eu-website/master/LICENSE" target="_blank">GPL</a> License.
+  </footer>
+</div>

@@ -1,0 +1,24 @@
+@bodyTopPadding: 70px;
+@footerHeight: 70px;
+@footerPaddingTop: 24px;
+
+
+html, body {
+  height: 100%;
+}
+.pageWrap {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom:  (@footerHeight) * -1; 
+}
+.pageWrap:after {
+  content: "";
+  display: block;
+}
+footer, .pageWrap:after {
+  height: @footerHeight;
+}
+
+footer {
+	padding-top: @footerPaddingTop;
+}

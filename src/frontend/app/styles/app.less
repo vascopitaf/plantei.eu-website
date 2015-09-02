@@ -1,0 +1,69 @@
+// Breaks at: screen-xs 480px; @screen-sm: 768px; @screen-md: 992px; @screen-lg: 1200px;
+@import "bower_components/bootstrap/less/bootstrap.less";
+@import "variables.less";
+@import "fonts.less";
+
+@import "helpers.less";
+
+body {
+        padding-bottom: @lm;
+        font-weight: @font-weight-base;
+}
+
+h1, h2,h3,h4,h5,h6 {
+        letter-spacing: 0.02em;
+}
+
+a {
+        text-decoration: underline;
+}
+
+a.btn, .navbar-brand {
+        text-decoration: none;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+        color: white;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+        border-color: white;
+}
+
+a, a:hover, a:active, a:focus {
+ outline: 0 !important;
+}
+.btn {
+        letter-spacing: 1px;
+}
+.btn.active, .btn:active {
+    background-color: #fff;
+}
+@import "stickyFooter.less";
+@import "forms.less";
+
+footer {
+        border-top: 1px solid @brand-primary;
+        text-align: center;
+        font-size: 0.9em;
+}
+
+.background-primary {
+        background-color: @brand-primary;
+        color: white;
+        a {
+                color: white;
+        }
+        .btn {
+                border-color: white;
+        }
+        footer {
+                border-top-color: white;
+        }
+}
+
+.envWarning {
+        background: white;
+}
+@import "index.less";
+
+//@import "bower_components/bootstrap/less/bootstrap.less";
