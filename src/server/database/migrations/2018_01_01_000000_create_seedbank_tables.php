@@ -136,8 +136,9 @@ class CreateSeedbankTables extends Migration
           $table->dateTime('start');
           $table->dateTime('end');
           $table->string('category')->nullable();
-          $table->string('address')->nullable();
-          $table->string('location')->nullable();
+          $table->string('place')->nullable();
+          $table->string('district')->nullable();
+          $table->string('council')->nullable();
           $table->float('lon')->nullable();
           $table->float('lat')->nullable();
           $table->string('title');

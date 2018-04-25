@@ -253,6 +253,7 @@ gulp.task('bowercopy', function(){
   .pipe(gulp.dest(base_path + 'src/server/public/js/fullcalendar'));
 
   gulp.src([
+    base_path + 'src/bower_components/leaflet/dist/leaflet.js',
     base_path + 'src/bower_components/leaflet/dist/leaflet.css',
     base_path + 'src/bower_components/leaflet/dist/images**/*'
     ])
@@ -310,4 +311,76 @@ gulp.task('bowercopy', function(){
     console.log('Done clearing view... exit code: ' + code);
     reload();
   });
+});
+
+gulp.task('dockerinstall', function(){
+  gulp.src(base_path + 'src/assets/less/style.less')
+    .pipe(less())
+    .pipe(gulp.dest(base_path + 'src/server/public/css/'));
+
+  gulp.src([
+    base_path + 'src/assets/js/tinymce**/**/**/plugin.min.js',
+    base_path + 'src/assets/js/*.js',
+    base_path + 'src/bower_components/bootstrap/dist/js/bootstrap.min.js',
+    base_path + 'src/bower_components/jquery/dist/jquery.min.js',
+    base_path + 'src/bower_components/jquery-ui/jquery-ui.min.js',
+    base_path + 'src/bower_components/blueimp-file-upload/js/*.js',
+    base_path + 'src/bower_components/blueimp-file-upload/js/**/*.js',
+    base_path + 'src/bower_components/blueimp-load-image/js/load-image.all.min.js',
+    base_path + 'src/bower_components/tinymce**/**',
+    base_path + 'src/bower_components/tinymce**/tinymce.min.js',
+    base_path + 'src/bower_components/jt.timepicker/*.min.js',
+    base_path + 'src/bower_components/bootstrap-tokenfield/dist/bootstrap-tokenfield.min.js'
+    ])
+  .pipe(gulp.dest(base_path + 'src/server/public/js'));
+
+  gulp.src([
+    base_path + 'src/bower_components/fullcalendar/dist/fullcalendar.min.js',
+    base_path + 'src/bower_components/fullcalendar/dist/lang-all.js',
+    base_path + 'src/bower_components/fullcalendar/dist/lang**/*',
+    ])
+  .pipe(gulp.dest(base_path + 'src/server/public/js/fullcalendar'));
+
+  gulp.src([
+    base_path + 'src/bower_components/leaflet/dist/leaflet.js',
+    base_path + 'src/bower_components/leaflet/dist/leaflet.css',
+    base_path + 'src/bower_components/leaflet/dist/images**/*'
+    ])
+    .pipe(gulp.dest(base_path + 'src/server/public/js/leaflet'));
+
+  gulp.src(base_path + 'src/bower_components/moment/min/moment-with-locales.min.js')
+  .pipe(rename('moment.min.js'))
+  .pipe(gulp.dest(base_path + 'src/server/public/js/fullcalendar'));
+
+  gulp.src([
+    base_path + 'src/assets/css/jquery-ui.theme.min.css',
+    base_path + 'src/assets/css/jquery-ui.min.css',
+    base_path + 'src/assets/css/images**/*.png',
+    base_path + 'src/bower_components/blueimp-file-upload/css/jquery.fileupload.css',
+    base_path + 'src/bower_components/blueimp-file-upload/css/jquery.fileupload-noscript.css',
+    base_path + 'src/bower_components/jt.timepicker/*.css',
+    base_path + 'src/bower_components/bootstrap-tokenfield/dist/css/bootstrap-tokenfield.min.css'
+    ])
+  .pipe(gulp.dest(base_path + 'src/server/public/css'));
+
+  gulp.src([
+    base_path + 'src/bower_components/fullcalendar/dist/fullcalendar.min.css',
+    ])
+  .pipe(gulp.dest(base_path + 'src/server/public/css/fullcalendar'));
+
+  gulp.src([
+    base_path + 'src/assets/less/Fira/*.{eot,svg,ttf,woff,woff2}',
+    base_path + 'src/bower_components/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
+    ])
+  .pipe(gulp.dest(base_path + 'src/server/public/fonts'));
+
+  gulp.src(paths.imgFiles).pipe(gulp.dest(base_path + 'src/server/public/images'));
+
+  for (let x of ['SeedBank', 'ProjectPresentation', 'Authentication', 'Newsletter']){
+    gulp.src(base_path + 'src/server/modules/' + x + '/Resources/lang/**/*.php')
+      .pipe(gulp.dest(moduleLangCopy));
+            //(e)base_path + 'src/server/resources/lang/vendor/' + x.toLowerCase()));
+    //moduleLangCopy({'path':  base_path + 'src/server/modules/' + x + 'Resources/lang/*/*.php'
+  };
+
 });

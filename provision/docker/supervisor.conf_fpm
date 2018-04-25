@@ -1,0 +1,4 @@
+[program:fpm]
+command=/usr/local/sbin/php-fpm -F
+autostart=true
+autorestart=true
