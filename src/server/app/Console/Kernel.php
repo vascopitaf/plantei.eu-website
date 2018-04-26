@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected $commands = [
 		'Caravel\Console\Commands\Inspire',
-		'Caravel\Commands\exportTranslations'
+		'Caravel\Commands\exportTranslations',
+		'Caravel\Commands\fakeData'
 	];
 
 	/**

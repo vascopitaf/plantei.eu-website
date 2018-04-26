@@ -171,42 +171,42 @@ class CreateSeedbankTables extends Migration
         $table->primary(['user_id', 'contact_id']);
       });
 
-      Schema::create('encilopedias', function (Blueprint $table) {
+      Schema::create('enciclopedias', function (Blueprint $table) {
           $table->increments('id');
           $table->timestamps();
           $table->integer('user_id')->unsigned();
           $table->foreign('user_id')->references('id')->on('users');
-          $table->text('description');
+          $table->text('description')->nullable();
           $table->string('common_name');
-          $table->string('latin_name');
+          $table->string('latin_name')->nullable();
           $table->integer('family_id')->unsigned()->nullable();
           $table->foreign('family_id')->references('id')->on('family');
       });
 
       Schema::create('popnames', function (Blueprint $table) {
           $table->increments('id');
-          $table->string('pop_name');
+          $table->string('pop_name')->nullable();
           $table->integer('popnameable_id');
-          $table->integer('popnameble_type');
+          $table->string('popnameable_type');
       });
 
       Schema::create('references', function (Blueprint $table) {
           $table->increments('id');
           $table->integer('referenceable_id')->nullable();
           $table->string('referenceable_type')->nullable();
-          $table->integer('type');
-          $table->string('content');
+          $table->integer('type')->nullable();
+          $table->string('content')->nullable();
       });
 
       Schema::create('plantuses', function (Blueprint $table) {
           $table->increments('id');
-          $table->integer('plantusesable_id')->nullable();
-          $table->string('plantusesable_type')->nullable();
+          $table->integer('plantuseable_id')->nullable();
+          $table->string('plantuseable_type')->nullable();
           $table->string('title')->nullable();
-          $table->text('article');
+          $table->text('article')->nullable();
           // [ "alimentar", "medicinal", "artesanal", "auxiliar, horta ou casa",
           //   "tóxico ou nocivo", "social, simbólico, ritual", "outros usos especiais"]
-          $table->integer('category_id');
+          $table->integer('category_id')->nullable();
       });
 
     }
