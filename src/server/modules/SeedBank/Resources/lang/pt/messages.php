@@ -120,4 +120,5 @@ return [
     'contact' => 'Contacto',
     'createSementeca' => 'Regista sementeca',
     'newevent' => 'Evento Novo',
+    'seedseason' => 'Época de sementeira',
 ];

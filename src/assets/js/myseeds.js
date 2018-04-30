@@ -49,8 +49,6 @@ $('form').on('submit', function (){
 
 $( function () {
 
-
-
   $('.seeds tbody tr').on('click', function () {
     var seed_id = $(this).data('seed_id');
     $.get("/seedbank/seedm/" + seed_id, function (data) {
@@ -61,7 +59,7 @@ $( function () {
       populateform(parameters, data);
       initRegisterSeed();
       previewseed(parameters, data);
-      $("#modal").find('.modal-title').text(data.common_name);
+      $("#modal").find('.modal-header h1').text(data.common_name);
       $('#seed-preview').show();
       $('form').hide();
 
@@ -78,7 +76,7 @@ $( function () {
     $('#seed-preview').hide();
     $('form').show();
     initRegisterSeed();
-    $("#modal").find('.modal-title').text(Lang.get('seedbank::messages.add_new_seed'));
+    $("#modal").find('.modal-header h1').text(Lang.get('seedbank::messages.add_new_seed'));
 
     $('#modal').modal('show');
   });
@@ -86,7 +84,7 @@ $( function () {
   $('#modal').on('click', '#seed-preview button', function(){
     $('#seed-preview').hide();
     initRegisterSeed();
-    $("#modal").find('.modal-title').prepend(Lang.get('seedbank::messages.change') + ' - ');
+    $("#modal").find('.modal-header h1').prepend(Lang.get('seedbank::messages.change') + ' - ');
 
     $('form').show();
   });
@@ -154,11 +152,15 @@ $( function () {
       });
     }); */
     // Change this to the location of your server-side upload handler:
+    var addimagebutton = $('#files .col-md-4:last')[0];
     var url = '/seedbank/add-pictures',
     deleteButton = $('<button/>')
       .addClass('btn btn-danger delete').prop('type', 'button')
       .text(deletebuttontext)
       .on('click', function () {
+        console.log('this');
+        console.log(this);
+
         /*console.log('this');
         console.log(this);
         console.log($(this));
@@ -173,8 +175,11 @@ $( function () {
           }
         });
         $.each($('#files').children('.col-md-4').not('.processing'), function (index, elem){
+          console.log($(elem));
           if (! $(elem).find('img').length) {
-            $(elem).remove();
+            if (! $(elem).find('.fileinput-button').length ) {
+              $(elem).remove();
+            }
           }
         });
         $this
@@ -190,7 +195,7 @@ $( function () {
       dataType: 'json',
       autoUpload: true,
       acceptFileTypes: /(\.|\/)(gif|jpe?g|png|tif?f)$/i,
-      maxFileSize: 999000,
+      maxFileSize: 5999000,
       maxNumberOfFiles: 5,
       getNumberOfFiles: function () {
         return $('#files').find('button.delete').length;
@@ -207,7 +212,6 @@ $( function () {
     }).on('fileuploadsubmit', function (e, data){
       /*console.log('submit');
       console.log(data);*/
-
       var seed_id = $("form input[name='seed_id']").val();
       if (seed_id) {
         data.formData = {"seed_id": seed_id};
@@ -217,8 +221,13 @@ $( function () {
     }).on('fileuploadadd', function (e, data) {
       /*console.log('uploadadd; counter: ' + upload_counter);
       console.log(data);*/
-      data.context = $('<div/>').addClass('col-md-4').css("padding-bottom", "24px").appendTo('#files');
-      /*$.each(data.files, function (index, file) {
+      let divcol = $('<div/>').addClass('col-md-4')
+        .insertBefore(addimagebutton);
+      $(divcol).append('<div class="img-content"></div>');
+      console.log(divcol);
+      data.context = $(divcol).children('.img-content');
+
+        /*$.each(data.files, function (index, file) {
         var node = $('<p/>');
         /*if (!index) {
           node
@@ -228,10 +237,12 @@ $( function () {
         node.appendTo(data.context);
       });*/
     }).on('fileuploadprocessalways', function (e, data) {
-      /*console.log('processalways');*/
+      /*console.log('processalways');
+      console.log(data);*/
+
       var index = data.index,
-      file = data.files[index],
-      node = $(data.context.children()[index]);
+        file = data.files[index],
+        node = $(data.context);
       if (file.preview) {
         node
           .prepend('<br>')
@@ -255,7 +266,7 @@ $( function () {
           );
     }).on('fileuploaddone', function (e, data) {
       /*console.log('done');
-      console.log(data);
+      console.log(data);/*
       console.log(upload_counter);*/
       $.each(data.result.files, function (index, file) {
         /*console.log(file);*/
@@ -282,17 +293,17 @@ $( function () {
             });
             return false;
           }
-          //console.log('create hidden input image');
-          //console.log(data.context);
+          /*console.log('create hidden input image');
+          console.log(data.context);*/
           var hidden_input = '<input type="hidden" name="pictures_id[]" value="' + file.id + '">';
-          var image = $('<img class="img-responsive img-rounded cell" data-file-id="'
+          var image = $('<img class="img-responsive" data-file-id="'
             + file.id + '" src="' + file.url + '" alt="' + file.label + '" />');
           /*var link = $('<a>')
             .attr('target', '_blank')
             .prop('href', file.url);*/
           data.context.empty().prepend(hidden_input).prepend(image).append(deleteButton.clone(true)
               .data(data));
-          $('#files').append(data.context);
+          //$('#files').append(data.context);
           //.wrap(link);
         } else if (file.error) {
           var error = $('<span class="text-danger"/>').text(file.error);
@@ -311,7 +322,7 @@ $( function () {
       });
     }).prop('disabled', !$.support.fileInput)
     .parent().addClass($.support.fileInput ? undefined : 'disabled');
-    var upload_counter = $('#files .col-md-4').length;
+    var upload_counter = $('#files .col-md-4').length - 1;
   }
 
 });

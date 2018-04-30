@@ -85,7 +85,9 @@ $('#files').on('click', 'button.delete', function(){
   });
   $.each($('#files').children('.col-md-4').not('.processing'), function (index, elem){
     if (! $(elem).find('img').length) {
-      $(elem).closest('.col-md-4').remove();
+      if ( ! $(elem).find('.fileinput-button').length ){
+        $(elem).closest('.col-md-4').remove();
+      }
     }
   });
 });

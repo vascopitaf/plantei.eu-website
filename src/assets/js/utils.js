@@ -278,7 +278,10 @@ var populateform = function(parameters, data) {
           });
           $.each($('#files').children('.col-md-4').not('.processing'), function (index, elem){
             if (! $(elem).find('img').length) {
-              $(elem).remove();
+              console.log($(elem));
+              if (! $(elem).find('.fileinput-button').length ) {
+                $(elem).remove();
+              }
             }
           });
           $this
@@ -293,10 +296,10 @@ var populateform = function(parameters, data) {
         $.each(data["pictures"], function (index, file){
           file.deleteUrl = "/seedbank/pictures/delete/" + file.id;
           var hidden_input = '<input type="hidden" name="pictures_id[]" value="' + file.id + '">';
-          var image = '<img class="img-responsive img-rounded cell" data-file-id="'
+          var image = '<img class="img-responsive" data-file-id="'
           + file.id + '" src="' + file.url + '" alt="' + file.label + '" />';
-          var pictureDiv = '<div class="col-md-4" style="padding-bottom: 24px;"' +
-            hidden_input + image + '</div>';
+          var pictureDiv = '<div class="col-md-4"><div class="img-content">' +
+            hidden_input + image + '</div></div>';
          var $clonedDelete = deleteButton.clone(true)
            .data("file", file);
          var $pictureDiv = $(pictureDiv);

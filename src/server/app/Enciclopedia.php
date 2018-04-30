@@ -11,6 +11,10 @@ class Enciclopedia extends Model
     'user_id', 'description', 'common_name',
     'family_id'
   ];
+  public function family()
+  {
+    return $this->belongsTo('Caravel\Family');
+  }
 
   public function pictures()
   {

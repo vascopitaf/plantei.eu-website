@@ -15,7 +15,8 @@ class Seed extends Model
   protected $casts = [
     'public' => 'boolean',
     'available' => 'boolean',
-    'user_id' => 'integer'
+    'user_id' => 'integer',
+    'quantity' => 'integer',
   ];
   //
   public function months()

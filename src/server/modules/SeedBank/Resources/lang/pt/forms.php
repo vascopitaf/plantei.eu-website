@@ -26,6 +26,7 @@ return [
   'bought' => 'Compra',
   'ownproduction' => 'Própria',
   'origin' => 'Origem',
+  'youcollected' => 'Recolhida por ti',
   'quantity' => 'Quantidade',
   'untilharvest' => ':months Mês até colheita|:months Meses até colheita',
   'traditional' => 'Tradicional',
@@ -33,4 +34,12 @@ return [
   'risklow' => 'Baixo',
   'riskmedium' => 'Médio',
   'riskhigh' => 'Alto',
+  'available' => 'Disponível',
+  'type' => 'Tipo',
+  'seed' => 'Semente',
+  'notseed' => 'Estaca/Garfo/Bolbo',
+  'directseedinghelp' => 'Selecciona "Não" se é necessário semear em alfobre e transplantar',
+  'descriptionmoreinfo' => 'Mais informação',
+  'addimages' => 'Imagem',
+
 ];

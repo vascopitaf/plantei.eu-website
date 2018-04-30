@@ -1,5 +1,16 @@
 @import "variables.less";
 
+form {
+  h4 {
+    font-size: 1.5em !important;
+    color: @brand-green !important;
+    font-weight: 800;
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
 ::-webkit-input-placeholder {
    font-style: italic;
 }
@@ -19,6 +30,71 @@
 label {
 	cursor: pointer;
 	font-weight: 500;
+  text-transform: uppercase;
+}
+
+label.up {
+  display: table-caption !important;
+  text-align: left !important;
+  width: 100%;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+/* Select boxes inside div.select-style
+https://codepen.io/sqrbrkt/details/Asbxf */
+
+.select-style {
+  position: relative;
+  display: inherit;
+}
+
+select:-moz-focusring {
+    /* https://stackoverflow.com/a/18853002 */
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+
+
+
+.select-style:after {
+  top: 50%;
+  left: 85%;
+  border: solid transparent;
+  content: " ";
+  position: absolute;
+  pointer-events: none;
+  border-top-color: #000000;
+  border-width: 5px;
+  margin-top: -2px;
+}
+
+.select-style select {
+  padding: 6px 12px;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  text-transform: uppercase !important;
+}
+
+.select-style select:focus {
+  outline: none;
+}
+
+span.btn-group select {
+  margin: 6px 16px;
 }
 
 
@@ -29,7 +105,7 @@ label {
 	margin-left: 0;
 	margin-right: 0;
 	.control-label {
-		text-align: left;
+		/*text-align: left;*/
 		display: table-cell;
 		white-space: nowrap;
 		padding-right: 12px;
@@ -43,10 +119,15 @@ label {
 
 }
 
+.control-label {
+  padding-top: 0;
+}
+
 .form-control {
 	border: 0;
 	border-bottom: 1px solid @brand-primary;
 	box-shadow: none;
+  padding: 0;
 }
 .form-control:focus {
 	border-width: 2px;
@@ -78,4 +159,160 @@ label {
 
 .horario span.btn-group > label.btn.active {
   background-color: @brand-green;
+}
+
+span.btn-group {
+  label.btn {
+    margin: 6px 6px;
+    font-weight: 800;
+    color: @brand-primary;
+  }
+  > .btn-default.active {
+    background-color: @brand-green;
+    color: white;
+    font-weight: 800;
+  }
+  > .btn-default.active.no {
+    background-color: @btn-danger-bg;
+    color: white;
+    font-weight: 800;
+  }
+}
+
+/* Months selection */
+span.col-md-12 > label.btn {
+  margin: 6px 0;
+  padding: 6px;
+}
+
+/* Style radio buttons */
+
+.radio {
+  padding-left: 0;
+}
+
+.radio label:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.radio .cr {
+  position: relative;
+  display: inline-block;
+  border: 1px solid #a9a9a9;
+  /*border-radius: .25em;*/
+  width: 1.3em;
+  height: 1.3em;
+  float: left;
+  margin-right: .5em;
+}
+
+/*.checkbox .cr .cr-icon {
+  position: absolute;
+  font-size: .8em;
+  line-height: 0;
+  top: 50%;
+  left: 20%;
+}*/
+
+.radio label input[type="radio"] {
+  display: none;
+}
+
+/*.checkbox label input[type="checkbox"]+.cr>.cr-icon {
+  opacity: 0;
+}*/
+
+.radio label input[type="radio"]:checked+.cr {
+  background-color: @brand-green;
+}
+
+.radio label input[type="radio"]:disabled+.cr {
+  opacity: .5;
+}
+
+/* Help texts */
+.help-btn {
+  margin: 0px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.help-box {
+  font-family: 'Helvetica';
+  text-transform: uppercase;
+  font-weight: bold;
+  /*color: @brand-green;*/
+  font-size: 14px;
+  position: relative;
+  display: inline-block;
+}
+.help-box .help-text {
+  display: none;
+  position: relative;
+  /* z-index: 1; */
+  background-color: @brand-green;
+  /*margin-left: 40px;*/
+  width: 200px;
+  margin-top: -1.5em;
+}
+.help-box .help-text a {
+  color: #808080;
+  padding: 0px;
+  text-decoration: none;
+  display: block;
+}
+.help-box .help-text a:hover {
+  background-color: @brand-green;
+}
+.help-box:hover .help-text {
+  display: block;
+  color: white;
+  text-transform: none;
+  background-color: @brand-green;
+  position: absolute;
+  padding: 0 5px;
+  z-index: 5;
+}
+
+/* Images
+#pictures #files {
+  .col-md-4 > .container {
+    width: 100%;
+    img {
+      object-fit: cover;
+    }
+  }
+} */
+#pictures .img-content {
+  margin: 16px;
+}
+#seed-preview .row.pictures .img-content {
+  margin: 2px;
+}
+#seed-preview .row.pictures .col-md-4:before {
+  padding-top: 75% !important; /* ratio 4:3 */
+}
+#pictures, #seed-preview .row.pictures {
+  .col-md-4:before {
+    content: "";
+	  display: block;
+	  padding-top: 100%; 	/* initial ratio of 1:1*/
+    /*padding-top: 75%; /* ratio 4:3 */
+  }
+  .img-content{
+	  position:  absolute;
+  	top: 0;
+  	left: 0;
+  	bottom: 0;
+  	right: 0;
+    img, .fileinput-button {
+      position: relative;
+      top: 50%;
+      transform: perspective(1px) translateY(-50%);
+      -webkit-transform: perspective(1px) translateY(-50%);
+      -ms-transform: perspective(1px) translateY(-50%);
+    }
+  }
 }

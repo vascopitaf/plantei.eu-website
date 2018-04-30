@@ -70,25 +70,33 @@ class SeedBankController extends Controller {
       ->with('csrfToken', csrf_token())->render();
   }
 
-  public function getEnciclopedia()
+  public function getEnciclopedia($letter = null)
   {
     $user = \Auth::user();
 
     $formErrors = "";
     $item = "";
 
-    $items = \Caravel\Seed::where('user_id', '<>', $user->id)->where('public', true)->orderBy('updated_at', 'desc');
-    //$seeds = $user->seeds()->orderBy('updated_at', 'desc');
-    //$pages = $seeds->paginate(5)->setPath('/seedbank/myseeds');
-    $paginated = $items->paginate(15)->setPath('/enciclopedia');
-    //return view('seedbank::myseeds')
-    foreach ($paginated->getCollection() as $seed)
-    {
-      $seed->load('family');
-      $seed->load('pictures');
+    $active = $letter;
+
+    if ($active) {
+      $items = \Caravel\Enciclopedia::where('common_name', 'LIKE', $active . '%')
+        ->orderBy('common_name');
+      $path = '/' . $active;
+    } else {
+      $items = \Caravel\Enciclopedia::orderBy('updated_at');
+      $path = "";
     }
 
-    $active = session()->pull('letter', '');
+    //$seeds = $user->seeds()->orderBy('updated_at', 'desc');
+    //$pages = $seeds->paginate(5)->setPath('/seedbank/myseeds');
+    $paginated = $items->paginate(3)->setPath('/enciclopedia' . $path);
+    //return view('seedbank::myseeds')
+    foreach ($paginated->getCollection() as $item)
+    {
+      $item->load('family');
+      $item->load('pictures');
+    }
 
     $alphabet = [];
     foreach(str_split('abcdefghijklmnopqrstuvwxyz') as $l){
@@ -108,6 +116,8 @@ class SeedBankController extends Controller {
       ->with('alphabet', $alphabet)
       ->with('item', $item)
       ->with('categories', $use_categories )
+      ->with('pagination', \Lang::get('pagination'))
+      ->with('links', $paginated->render())
       ->with('paginated', $paginated)
       ->with('active', ['enciclopedia' => true]);
   }
@@ -184,7 +194,8 @@ class SeedBankController extends Controller {
       ->with('preview', true);
 
     if ($myseed) {
-      $view = $view->with('modal', true)->with('title', $myseed->common_name);
+      $view = $view->with('modal', true)
+        ->with('modal-title', $myseed->common_name);
     }
 //dd($paginated);
     return $view;

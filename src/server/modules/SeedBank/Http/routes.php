@@ -146,7 +146,7 @@ Route::group(['prefix' => 'seedbank', 'namespace' => 'Modules\SeedBank\Http\Cont
       $picture = \Caravel\Picture::findOrFail($id);
       if ( $picture->seed ){
         if ( !$picture->seed->user_id == $user->id ) {
-          return [ "files" => [[ $picture->md5sum => false]] ]; 
+          return [ "files" => [[ $picture->md5sum => false]] ];
         }
       }
       $deleted = \File::delete($picture->path);
@@ -189,11 +189,17 @@ Route::group(['prefix' => 'enciclopedia', 'namespace' => 'Modules\SeedBank\Http\
 {
   Route::group(['middleware' => 'auth'], function(){
     //Route::get('/get/{id}', 'SeedBankController@getEventById');
-    Route::get('/letter/{letter}', function ($letter) {
-      return redirect('/enciclopedia')->with('letter', $letter);
-    });
+    // Route::get('/letter/{letter}', function ($letter) {
+    //   // return redirect('/enciclopedia')
+    //   //   ->with('letter', $letter)
+    //   //   ->with('page', request()->input('page'));
+    //   return redirect()
+    //     ->action('\Modules\SeedBank\Http\Controllers\SeedBankController@getEnciclopedia')
+    //     ->with('letter', $letter);
+    // });
 
     Route::get('/', 'SeedBankController@getEnciclopedia');
+    Route::get('{letter?}', 'SeedBankController@getEnciclopedia');
     //Route::post('/', 'SeedBankController@postEvents');
   });
 });
