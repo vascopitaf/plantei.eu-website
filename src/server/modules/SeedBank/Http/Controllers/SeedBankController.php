@@ -55,13 +55,24 @@ class SeedBankController extends Controller {
     $formErrors = $formErrors ?: "";
     $item = $item ?: "";
 
-    $use_categories = [
-      "alimentar", "medicinal", "artesanal", "auxiliar, horta ou casa",
-      "tóxico ou nocivo", "social, simbólico, ritual", "outros usos especiais"
-    ];
+    // $use_categories = [
+    //   "alimentar", "medicinal", "artesanal", "auxiliar, horta ou casa",
+    //   "tóxico ou nocivo", "social, simbólico, ritual", "outros usos especiais"
+    // ];
+    $use_categories = \Lang::get('seedbank::forms.category_types');
+
 
     if ($item) {
       $item->load(['pictures', 'family', 'uses', 'references']);
+      $categories = [];
+      forEach($item->uses as $use) {
+        $categories []= $use_categories[$use->category_id];
+      }
+
+      $item = $item->toArray();
+      for ($i=0 ; $i < sizeof($categories) ; $i++) {
+        $item['uses'][$i]['category'] = $categories[$i];
+      }
     }
 
     return view('seedbank::modal_enciclform')
@@ -93,8 +104,6 @@ class SeedBankController extends Controller {
       $path = "";
     }
 
-    //$seeds = $user->seeds()->orderBy('updated_at', 'desc');
-    //$pages = $seeds->paginate(5)->setPath('/seedbank/myseeds');
     $paginated = $items->paginate(15)->setPath('/enciclopedia' . $path);
     //return view('seedbank::myseeds')
     foreach ($paginated->getCollection() as $item)
