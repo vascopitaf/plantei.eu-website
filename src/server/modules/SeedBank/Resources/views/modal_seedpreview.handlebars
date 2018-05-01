@@ -5,7 +5,9 @@
   <div class="row">
     <div class="col-md-6" style="border-right: 2px solid black;">
       <div data-name="files" class="col-md-4 cover">
-        <img class="img-responsive img-rounded cell" data-file-id="{{ seed.pictures.0.id }}" src="{{#if seed.pictures.0 }}{{ seed.pictures.0.url }}{{else}}/images/planteieulogocinza.png{{/if}}" alt="label" />'
+        <div class="img-content">
+          <img class="img-responsive" data-file-id="{{ seed.pictures.0.id }}" src="{{#if seed.pictures.0 }}{{ seed.pictures.0.url }}{{else}}/images/planteieulogocinza.png{{/if}}" alt="label" />'
+        </div>
       </div>
       <!-- div data-name="info" -->
         <div class="col-md-8">
@@ -40,11 +42,11 @@
           </tbody>
         </table>
       </div>
-      <p>{{#if seed.untilharvest}}{{choice 'seedbank::forms.untilharvest' seed.untilharvest months=seed.untilharvest}}{{/if}}</p>
+      <p data-name="untilharverst">{{#if seed.untilharvest}}{{choice 'seedbank::forms.untilharvest' seed.untilharvest months=seed.untilharvest}}{{/if}}</p>
     </div>
   </div>
-  <div class="row">
-    <div data-name="description">
+  <div class="row"{{#unless seed.desription}} style="display:none;"{{/unless}}>
+    <div data-name="description" data-parent="div">
       {{{seed.description}}}
     </div>
   </div>

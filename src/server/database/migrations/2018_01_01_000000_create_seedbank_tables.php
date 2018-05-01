@@ -56,15 +56,18 @@ class CreateSeedbankTables extends Migration
           $table->string('units',20)->nullable();
           $table->integer('quantity')->nullable()->unsigned();
           // Barter(2); Bought(3); Own production(1)
-          $table->smallInteger('origin')->default(0)->unsigned();
-          $table->boolean('traditional')->default(false);
-          $table->integer('risk')->nullable()->unsigned();
+          $table->smallInteger('origin')->unsigned()->nullable();
+          //$table->boolean('traditional')->default(false)->nullable();
+          // traditional: 0: not traditional; 1: low risk; 2: medium risk; 3: high risk
+          $table->smallInteger('traditionalrisk')->nullable()->unsigned();
+          // Type: true: seed; false: other
+          $table->boolean('seedtype')->nullable();
 
           // Farming
           // Months until recollection
           $table->integer('untilharvest')->nullable()->unsigned();
           // Direct planting (0) (1)false (2)true
-          $table->smallInteger('direct')->default(0)->unsigned();
+          $table->boolean('direct')->nullable();
           $table->text('description')->nullable();
 
           $table->boolean('public')->default(true);

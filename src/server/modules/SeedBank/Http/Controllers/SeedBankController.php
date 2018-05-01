@@ -141,6 +141,17 @@ class SeedBankController extends Controller {
       foreach ( $myseed->months as $month) {
         $monthsTable[$month->month - 1] = true;
       }
+      $myseed = $myseed->toArray();
+      $origin = $myseed["origin"];
+      $myseed['origin'] = [];
+      for ($i=0; $i < 4 ; $i++) {
+        $myseed['origin'][$i] = ($origin == $i);
+      }
+      $traditionalrisk = $myseed["traditionalrisk"];
+      $myseed['traditionalrisk'] = [];
+      for ($i=0; $i < 4 ; $i++) {
+        $myseed['traditionalrisk'][$i] = ($traditionalrisk == $i);
+      }
     };
 
     $formErrors = $formErrors ?: "";
@@ -323,7 +334,7 @@ class SeedBankController extends Controller {
     $seed_keys = [
       'quantity','year', 'local', 'description', 'public', 'available', 'description',
       'latin_name','common_name','polinization','direct', 'untilharvest', 'origin',
-      'available', 'units', 'quantity', 'risk', 'traditional'
+      'available', 'units', 'quantity', 'traditionalrisk', 'seedtype'
     ];
 
     $seed_taxonomy = ['species', 'variety','family'];
@@ -334,9 +345,10 @@ class SeedBankController extends Controller {
     ];
     $seed_new = [];
     $months_new = [];
+    $t = [];
     foreach ( $request->input() as $key =>  $value ){
       if (in_array($key, $seed_keys)){
-        if ( $value ) {
+        if ( $value != "") {
           $seed_new[$key] = $value;
         } else {
           if ($key == 'description') {
@@ -369,7 +381,6 @@ class SeedBankController extends Controller {
         abort(403);
       }
       $seed->syncMonths($months_new);
-
       $seed->update($seed_new);
     } else {
       $seed_new['user_id'] = $request->user()->id;

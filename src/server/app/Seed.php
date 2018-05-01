@@ -9,14 +9,17 @@ class Seed extends Model
   protected $fillable = [
     'local', 'year', 'origin', 'available', 'public', 'description', 'user_id',
     'common_name', 'latin_name', 'species_id', 'variety_id', 'family_id',
-    'polinization', 'direct', 'untilharvest', 'units', 'quantity', 'risk', 'traditional',
-    'direct'
+    'polinization', 'direct', 'untilharvest', 'units', 'quantity',
+    'traditionalrisk', 'seedtype'
   ];
   protected $casts = [
     'public' => 'boolean',
     'available' => 'boolean',
+    'seedtype' => 'boolean',
+    'direct' => 'boolean',
     'user_id' => 'integer',
     'quantity' => 'integer',
+    'traditionalrisk' => 'integer',
   ];
   //
   public function months()

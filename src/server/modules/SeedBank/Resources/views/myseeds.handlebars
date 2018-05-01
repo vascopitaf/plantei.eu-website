@@ -5,10 +5,10 @@
       </div>
       <div class="col-md-6">
         <ul class="buttons">
-          <li><a class="iconified exchanges pt" href="#"></a></li>
-          <li><a class="iconified searchseed pt" href="#"></a></li>
-          <li><a class="iconified delseed pt" href="#"></a></li>
-          <li><a id="newseed" class="iconified newseed pt" href="#"></a></li>
+          <li><a class="iconified exchanges pt"></a></li>
+          <li><a class="iconified searchseed pt"></a></li>
+          <li><a class="iconified delseed pt"></a></li>
+          <li><a id="newseed" class="iconified newseed pt"></a></li>
         </ul>
       </div>
     </div>
@@ -92,63 +92,5 @@ $('#files').on('click', 'button.delete', function(){
   });
 });
 
-/*$('#seeds tr').on('click', function () {
-  //window.open('/seedbank/register/' + $(this).data('seed_id'), '_self');
-  var seed_id = $(this).data('seed_id');
-  $.get("/seedbank/seedm/" + seed_id, function (data) {
-    if (data.length == 0){
-      return false;
-    }
-    $('#modal .modal-content').empty();
-    $('#modal .modal-content').append(data);
-
-    $('#modal').modal('show');
-  });
-}).mouseover(function () {
-  $(this).addClass('active');
-}).mouseout(function () {
-  $(this).removeClass('active');
-});*/
-
-/*$('#modal').on('click', '.modal-footer .footer-left button', function(){
-  var seed_id = $('#modal .modal-title').data("seed_id");
-  window.open('/seedbank/register/' + seed_id, '_self');
-});
-
-$('.listEvents').on('click', 'li', function (e) {
-  $.get('/events/get/' + $(this).data('id'), function (data) {
-    if (! data ) { return false;}
-    $(".modal-content").html(data);
-    $('#modal').modal('show');
-  });
-});
-
-$('#messages tr').on('click', function () {
-    $('#modal .modal-content').html(
-      '<img src="/js/tinymce/skins/lightgray/img/loader.gif"/>'
-    );
-    $('#modal').modal('show');
-    var threadId = $(this).data('thread_id');
-    $.get('/messages/' + threadId, function (data) {
-      $('#modal .modal-content').html(data);
-    });
-  }).mouseover(function () {
-    $(this).addClass('active');
-  }).mouseout( function () {
-    $(this).removeClass('active');
-  });
-
-/*$('#newseed').on('click', function () {
-  $.get('/seedbank/register', function (data) {
-    $('#modal .modal-content').html(data);
-    $('#modal').modal('show');
-    $('#modal').on('click', '#cancel_seed', function(e){
-      $('#modal .modal-content').empty();
-      $('#modal').modal('hide');
-    })
-    initRegisterSeed();
-  });
-  return false;
-});*/
 </script>
 {{>footer}}

@@ -20,8 +20,9 @@ let parameters = [
   {"name": "direct", "value": "direct", "type": "checked"}
 ];
 
-$('form').on('submit', function (){
+$('form').on('submit', function (e){
   element = $('input[name="common_name"]');
+  e.preventDefault();
   if (! element.val()) {
     $('#identification').collapse('show');
     element.closest('.form-group').addClass('has-error');
@@ -33,14 +34,10 @@ $('form').on('submit', function (){
   var formdata = $(this).serializeArray();
   $.post('/seedbank/register', formdata, function(data) {
     if (! data.errors ) {
-      window.location = location.protocol + "//" + location.host + location.pathname +
-        "?seed_id=" + data.id;
+      window.open('/seedbank/myseeds?seed_id=' + data.id, '_self');
+      return false;
     }
-    return false;
-
-    //console.log(data);
     previewseed(parameters, data);
-
     $("form").hide();
     $("#seed-preview").show();
   });
@@ -49,22 +46,37 @@ $('form').on('submit', function (){
 
 $( function () {
 
+  $('form input[name=traditionalrisk]').on('change', function (e){
+    console.log(e);
+    if (e.target.value == "") {
+      console.log('disable: ' + e.target.value);
+      $(e.target).parents('div').first()
+        .find('option[value="1"]').first().prop('selected', true)
+        .closest('select').prop('disabled', true);
+    } else {
+      console.log('enable: ' + e.target.value);
+      $(e.target).parents('div').first()
+        .find('select').prop('disabled', false);
+    }
+  });
+  $('form input[name=origin]').on('change', function (e){
+    console.log('changed origin field');
+    if (e.target.value == "1") {
+      console.log('disable: ' + e.target.value);
+      $(e.target).parents('div').first()
+        .find('option[value="0"]').first().prop('selected', true)
+        .closest('select').prop('disabled', true);
+    } else {
+      console.log('enable: ' + e.target.value);
+      $(e.target).parents('div').first()
+        .find('select').prop('disabled', false);
+    }
+  });
+
+
   $('.seeds tbody tr').on('click', function () {
     var seed_id = $(this).data('seed_id');
-    $.get("/seedbank/seedm/" + seed_id, function (data) {
-      if (data.length == 0){
-        return false;
-      }
-      clearform();
-      populateform(parameters, data);
-      initRegisterSeed();
-      previewseed(parameters, data);
-      $("#modal").find('.modal-header h1').text(data.common_name);
-      $('#seed-preview').show();
-      $('form').hide();
-
-      $('#modal').modal('show');
-    });
+    window.open('/seedbank/myseeds?seed_id=' + seed_id, '_self')
   }).mouseover(function () {
     $(this).addClass('active');
   }).mouseout(function () {
@@ -72,7 +84,7 @@ $( function () {
   });
 
   $('#newseed').on('click', function () {
-    clearform();
+    clearForm();
     $('#seed-preview').hide();
     $('form').show();
     initRegisterSeed();
@@ -85,13 +97,13 @@ $( function () {
     $('#seed-preview').hide();
     initRegisterSeed();
     $("#modal").find('.modal-header h1').prepend(Lang.get('seedbank::messages.change') + ' - ');
-
     $('form').show();
   });
 
   $('#cancel_seed').on('click', function () {
     $('#modal').modal('hide');
   });
+
   tinymce.init({
     selector: 'textarea',
     inline: false,
@@ -116,56 +128,16 @@ $( function () {
           });
     }
   });
+
   var initRegisterSeed = function () {
     var deletebuttontext = Lang.get('seedbank::messages.delete');
-
-    //console.log("registerseed");
-    /*$('#cancel_seed').on('click', function () {
-      //window.open('/seedbank/myseeds', '_self');
-      $('#modal').modal('hide');
-      return false;
-    });*/
-    $('#fileupload').off();
-    try {
-      // FIXME: Have to destroy fileupload and recreate
-      // for duplicate eventlisteners ? (is there other way?)
-      $('#fileupload').fileupload('destroy');
-    }
-    catch (error) {
-      //console.log('catched error');
-    };
-/*    $('#files').on('click', 'button.delete', function(){
-      console.log('global delete button');
-      var file = $(this).data(),
-      that = this;
-      console.log(file);
-      $.getJSON(file.deleteUrl, function (data){
-       if (data.files[0][file.md5sum]){
-          that.closest('.col-md-4').remove();
-          upload_counter = upload_counter - 1;
-        }
-      });
-      $.each($('#files').children('.col-md-4').not('.processing'), function (index, elem){
-        if (! $(elem).find('img').length) {
-          $(elem).closest('.col-md-4').remove();
-        }
-      });
-    }); */
-    // Change this to the location of your server-side upload handler:
     var addimagebutton = $('#files .col-md-4:last')[0];
+    // Change this to the url of your server-side upload handler:
     var url = '/seedbank/add-pictures',
     deleteButton = $('<button/>')
       .addClass('btn btn-danger delete').prop('type', 'button')
       .text(deletebuttontext)
       .on('click', function () {
-        console.log('this');
-        console.log(this);
-
-        /*console.log('this');
-        console.log(this);
-        console.log($(this));
-        console.log($(this).data());*/
-
         var $this = $(this),
         file = $this.data().result.files[0];
         $.getJSON(file.deleteUrl, function (data){
@@ -210,8 +182,6 @@ $( function () {
       previewCrop: true,
       //multipart: false
     }).on('fileuploadsubmit', function (e, data){
-      /*console.log('submit');
-      console.log(data);*/
       var seed_id = $("form input[name='seed_id']").val();
       if (seed_id) {
         data.formData = {"seed_id": seed_id};
@@ -219,27 +189,12 @@ $( function () {
         data.formData = {};
       }
     }).on('fileuploadadd', function (e, data) {
-      /*console.log('uploadadd; counter: ' + upload_counter);
-      console.log(data);*/
       let divcol = $('<div/>').addClass('col-md-4')
         .insertBefore(addimagebutton);
       $(divcol).append('<div class="img-content"></div>');
-      console.log(divcol);
       data.context = $(divcol).children('.img-content');
 
-        /*$.each(data.files, function (index, file) {
-        var node = $('<p/>');
-        /*if (!index) {
-          node
-          .append('<br>')
-          .append(uploadButton.clone(true).data(data));
-          }*
-        node.appendTo(data.context);
-      });*/
     }).on('fileuploadprocessalways', function (e, data) {
-      /*console.log('processalways');
-      console.log(data);*/
-
       var index = data.index,
         file = data.files[index],
         node = $(data.context);
@@ -265,24 +220,16 @@ $( function () {
           progress + '%'
           );
     }).on('fileuploaddone', function (e, data) {
-      /*console.log('done');
-      console.log(data);/*
-      console.log(upload_counter);*/
       $.each(data.result.files, function (index, file) {
-        /*console.log(file);*/
         if (file.url) {
           upload_counter += 1;
           $.each($('#files').children('.col-md-4'), function (index, elem) {
             var elem_img = $(elem).find('img');
             if (elem_img.length) {
               if ($(elem_img[0]).data('file-id') == file.id) {
-                //console.log('file_id exists; counter: ' + upload_counter);
                 $(elem_img[0]).closest('.col-md-4').remove();
-
                 upload_counter = upload_counter - 1;
-                //console.log('file_id exists; counter: ' + upload_counter);
                 return false;
-
               }
             }
           });
@@ -293,25 +240,17 @@ $( function () {
             });
             return false;
           }
-          /*console.log('create hidden input image');
-          console.log(data.context);*/
           var hidden_input = '<input type="hidden" name="pictures_id[]" value="' + file.id + '">';
           var image = $('<img class="img-responsive" data-file-id="'
             + file.id + '" src="' + file.url + '" alt="' + file.label + '" />');
-          /*var link = $('<a>')
-            .attr('target', '_blank')
-            .prop('href', file.url);*/
           data.context.empty().prepend(hidden_input).prepend(image).append(deleteButton.clone(true)
               .data(data));
-          //$('#files').append(data.context);
-          //.wrap(link);
         } else if (file.error) {
           var error = $('<span class="text-danger"/>').text(file.error);
           $(data.context.children()[index])
             .append('<br>')
             .append(error);
         }
-        //console.log('done_end; counter:' + upload_counter);
       });
     }).on('fileuploadfail', function (e, data) {
       $.each(data.files, function (index) {
@@ -324,5 +263,4 @@ $( function () {
     .parent().addClass($.support.fileInput ? undefined : 'disabled');
     var upload_counter = $('#files .col-md-4').length - 1;
   }
-
 });

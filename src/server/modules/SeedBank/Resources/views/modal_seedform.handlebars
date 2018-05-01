@@ -4,6 +4,7 @@
   <input type="hidden" name="_token" value="{{ csrfToken }}">
   <input type="hidden" name="_id" value="{{ oldInput.id }}">
   <input type="hidden" name="seed_id" value="{{ oldInput.id }}">
+  <input type="hidden" name="_saved" value="1">
   <div class="row">
     <div class="col-md-12">
       <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="color: black;">
@@ -61,7 +62,7 @@
                     <label class="control-label">{{lang 'seedbank::forms.quantity'}}</label>
                     <input type="number" value="{{quantity}}" class="form-control" name="quantity" style="width: 48%; float: left; margin-right: 6px;">
                     <div class="select-style">
-                      <select value="gr" name="units">
+                      <select value="gr" name="units"{{#unless quantity}} disabled{{/unless}}>
                         <option value="gr">gr.</option>
                         <option value="unit">unid.</option>
                       </select>
@@ -74,18 +75,18 @@
                   <div class="form-group">
                     <label class="control-label up">{{lang 'seedbank::forms.youcollected'}}?</label><br/>
                     <span class="cell btn-group" data-toggle="buttons">
-                      <label class="btn btn-default {{#if available}}active{{/if}}">
-                        <input type="radio" name="available" {{#if available}}checked{{/if}} value="true" /> {{lang 'seedbank::messages.yes'}}
+                      <label class="btn btn-default {{#if origin.1}}active{{/if}}">
+                        <input type="radio" name="origin"{{#if origin.1}} checked{{/if}} value="1" /> {{lang 'seedbank::messages.yes'}}
                       </label>
-                      <label class="btn btn-default no {{#unless available}}active{{/unless}}">
-                        <input type="radio" name="available" {{#unless available}}checked{{/unless}} value="false" /> {{lang 'seedbank::messages.no'}}
+                      <label class="btn btn-default no{{#unless origin.1}} active{{/unless}}">
+                        <input type="radio" name="origin"{{#unless origin.1}} checked{{/unless}}/> {{lang 'seedbank::messages.no'}}
                       </label>
                       <div class="select-style">
-                        <select value="" name="origin" style="margin-left: 16px; padding: 6px 12px;">
-                          <option value="">{{lang 'seedbank::forms.origin'}}</option>
-                          <option value="1">{{lang 'seedbank::forms.barter'}}</option>
-                          <option value="2">{{lang 'seedbank::forms.bought'}}</option>
-                          <option value="3">{{lang 'seedbank::forms.ownproduction'}}</option>
+                        <select name="origin"{{#if origin.1}} disabled{{/if}}>
+                          <option value="0">{{lang 'seedbank::forms.origin'}}</option>
+                          <option value="2"{{#if origin.2}} selected{{/if}}>{{lang 'seedbank::forms.barter'}}</option>
+                          <option value="3"{{#if origin.3}} selected{{/if}}>{{lang 'seedbank::forms.bought'}}</option>
+                          <!--option value="">{{lang 'seedbank::forms.ownproduction'}}</option -->
                         </select>
                       </div>
                     </span>
@@ -110,14 +111,14 @@
                   <label class="control-label up">{{lang 'seedbank::forms.type'}}</label>
                   <div class="radio">
                     <label>
-                      <input type="radio" name="seedtype" value="1">
+                      <input type="radio" name="seedtype" value="true"{{#if seedtype}} checked{{/if}}>
                       <span class="cr"></span>
                       {{lang 'seedbank::forms.seed'}}
                     </label>
                   </div>
                   <div class="radio">
                     <label>
-                      <input type="radio" name="seedtype" value="2">
+                      <input type="radio" name="seedtype" value="false" {{#unless seedtype}} checked{{/unless}}>
                       <span class="cr"></span>
                       {{lang 'seedbank::forms.notseed'}}
                     </label>
@@ -127,18 +128,18 @@
                   <div class="form-group">
                     <label class="control-label up">{{lang 'seedbank::forms.traditional'}}</label><br/>
                     <span class="cell btn-group" data-toggle="buttons">
-                      <label class="btn btn-default {{#if available}}active{{/if}}">
-                        <input type="radio" name="traditional"{{#if available}} checked{{/if}} value="true" /> {{lang 'seedbank::messages.yes'}}
+                      <label class="btn btn-default{{#unless traditionalrisk.0}} active{{/unless}}">
+                        <input type="radio" name=traditionalrisk value="1"{{#unless traditionalrisk.0}} checked{{/unless}} value="1"/> {{lang 'seedbank::messages.yes'}}
                       </label>
-                      <label class="btn btn-default no{{#unless available}} active{{/unless}}">
-                        <input type="radio" name="traditional"{{#unless available}} checked{{/unless}} value="false" /> {{lang 'seedbank::messages.no'}}
+                      <label class="btn btn-default no{{#if traditionalrisk.0}} active{{/if}}">
+                        <input type="radio" name="traditionalrisk"{{#if traditionalrisk.0}} checked{{/if}} value="0" /> {{lang 'seedbank::messages.no'}}
                       </label>
                       <div class="select-style">
-                        <select value="" name="risk" style="margin-left: 16px; padding: 6px 12px;">
-                          <option value="">{{lang 'seedbank::forms.risk'}}</option>
-                          <option value="1">{{lang 'seedbank::forms.risklow'}}</option>
-                          <option value="2">{{lang 'seedbank::forms.riskmedium'}}</option>
-                          <option value="3">{{lang 'seedbank::forms.riskhigh'}}</option>
+                        <select name="traditionalrisk"{{#unless traditional}} disabled{{/unless}}>
+                          <option value="1">{{lang 'seedbank::forms.risk'}}</option>
+                          <option value="1"{{#if traditionalrisk.1}} selected{{/if}}>{{lang 'seedbank::forms.risklow'}}</option>
+                          <option value="2"{{#if traditionalrisk.2}} selected{{/if}}>{{lang 'seedbank::forms.riskmedium'}}</option>
+                          <option value="3"{{#if traditionalrisk.3}} selected{{/if}}>{{lang 'seedbank::forms.riskhigh'}}</option>
                         </select>
                       </div>
                     </span>
@@ -254,11 +255,11 @@
                     </div>
                   </label>
                   <span class="cell btn-group" data-toggle="buttons">
-                    <label class="btn btn-default {{#if direct.2}}active{{/if}}">
-                      <input type="radio" name="direct" value="2" /> {{lang 'seedbank::messages.yes'}}
+                    <label class="btn btn-default {{#if direct}}active{{/if}}">
+                      <input type="radio" name="direct" value="true" /> {{lang 'seedbank::messages.yes'}}
                     </label>
-                    <label class="btn btn-default no {{#if direct.1}}active{{/if}}">
-                      <input type="radio" name="direct" value="1" /> {{lang 'seedbank::messages.no'}}
+                    <label class="btn btn-default no {{#unless direct}}active{{/unless}}">
+                      <input type="radio" name="direct" value="false" /> {{lang 'seedbank::messages.no'}}
                     </label>
                   </span>
                 </div>
