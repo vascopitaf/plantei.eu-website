@@ -2,66 +2,105 @@
   <div class="row">
     <div class="col-md-6" style="border-right: 2px solid black;">
       <div data-name="files" class="col-md-4 cover">
-        <img class="img-responsive img-rounded cell" data-file-id="{{ seed.pictures.0.id }}" src="{{#if seed.pictures.0 }}{{ seed.pictures.0.url }}{{else}}/images/planteieulogocinza.png{{/if}}" alt="label" />'
+        <img class="img-responsive" data-file-id="{{ item.pictures.0.id }}" src="{{#if item.pictures.0 }}{{ item.pictures.0.url }}{{else}}/images/planteieulogocinza.png{{/if}}" alt="label" />'
       </div>
       <!-- div data-name="info" -->
         <div class="col-md-8">
           <p data-name="common_name">{{item.common_name}}</p>
-          <p data-name="quantity">!!200 gr. semente!!</p>
-          <p data-name="availability">!!Disponível para troca!!</p>
-          <p data-name="location">!!Pavia, Mora, Évora!!</p>
+          <p data-name="latin_name">{{item.latin_name}}</p>
+          <p data-name="family">{{item.family.name}}</p>
         </div>
       <!-- /div -->
     </div>
-    <div class="col-md-6">
-      <p>!!ÉPOCA DE SEMENTEIRA!!</p>
-      <div  data-name="months">
-        <table class="table table-bordered">
-          <tbody>
-            <tr>
-              <td{{#if monthstable.0}} class="active"{{/if}}>{{ messages.monthjan }}.</td>
-              <td{{#if monthstable.1}} class="active"{{/if}}>{{ messages.monthfeb }}.</td>
-              <td{{#if monthstable.2}} class="active"{{/if}}>{{ messages.monthmar }}.</td>
-              <td{{#if monthstable.3}} class="active"{{/if}}>{{ messages.monthapr }}.</td>
-              <td{{#if monthstable.4}} class="active"{{/if}}>{{ messages.monthmay }}.</td>
-              <td{{#if monthstable.5}} class="active"{{/if}}>{{ messages.monthjun }}.</td>
-            </tr>
-            <tr>
-              <td{{#if monthstable.6}} class="active"{{/if}}>{{ messages.monthjul }}.</td>
-              <td{{#if monthstable.7}} class="active"{{/if}}>{{ messages.monthaug }}.</td>
-              <td{{#if monthstable.8}} class="active"{{/if}}>{{ messages.monthsep }}.</td>
-              <td{{#if monthstable.9}} class="active"{{/if}}>{{ messages.monthoct }}.</td>
-              <td{{#if monthstable.10}} class="active"{{/if}}>{{ messages.monthnov }}.</td>
-              <td{{#if monthstable.11}} class="active"{{/if}}>{{ messages.monthdec }}.</td>
-            </tr>
-          </tbody>
-        </table>
+    <div data-name="description" class="col-md-6">
+      {{{item.description}}}
+    </div>
+  </div>
+  <div class="row pictures"{{#unless item.pictures}} style="display: none;"{{/unless}}>
+    {{#each item.pictures}}
+    <div class="col-md-4">
+      <div class="img-content">
+        <img class="img-responsive" data-file-id="{{ id }}" src="{{ url }}" alt="label" />
       </div>
-      <p>!!Sementeira directa, 2 meses até à colheita!!</p>
-    </div>
-  </div>
-  <div class="row">
-    <div data-name="description">
-      {{{seed.description}}}
-    </div>
-  </div>
-  <div class="row pictures" style="margin-bottom:24px;{{#unless seed.pictures}} display: none;{{/unless}}">
-
-    {{#each seed.pictures}}
-    <div class="col-md-4" style="margin: 0 4px;">
-      <img class="img-responsive img-rounded cell" data-file-id="{{ id }}" src="{{ url }}" alt="label" />'
     </div>
     {{/each}}
   </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p data-name="common_name">{{item.common_name}}</p>
+      <p data-name="latin_name">{{item.latin_name}}</p>
+      <p data-name="family">{{item.family.name}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default"><!-- Accordion Description -->
+        <div class="panel-heading" role="tab" id="headingDescription2">
+          <h4 class="panel-title">
+            <a style="color: black;" role="button" data-toggle="collapse" href="#description2" aria-expanded="false" aria-controls="collapseDescription2">
+              {{lang 'seedbank::messages.description'}}
+            </a>
+          </h4>
+        </div>
+        <div id="description2" class="panel-collapse collapse" data-parent="#accordion2" role="tabpanel" aria-labelledby="headingDescription2">
+          <div class="panel-body">
+            {{{item.description}}}
+          </div>
+        </div>
+      </div><!-- END Accordion Description -->
+      <div class="panel panel-default"><!-- Accordion Uses -->
+        <div class="panel-heading" role="tab" id="headingUses2">
+          <h4 class="panel-title">
+            <a style="color: black;" role="button" data-toggle="collapse" href="#uses2" aria-expanded="true" aria-controls="collapseUses2">
+              {{lang 'seedbank::forms.uses'}}
+            </a>
+          </h4>
+        </div>
+        <div id="uses2" class="panel-collapse collapse" data-parent="#accordion2" role="tabpanel" aria-labelledby="headingUses2">
+          <div class="panel-body">
+            <div class="col-md-12 uses">
+              <div class="row item">
+                {{#each item.uses}}
+                <h5>{{category_id}}</h5>
+                <h4>{{title}}</h4>
+                <div class="article">
+                  {{{article}}}
+                </div>
+                {{/each}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- END Accordion Uses -->
+      <div class="panel panel-default"><!-- Accordion References -->
+        <div class="panel-heading" role="tab" id="headingReferences2">
+          <h4 class="panel-title">
+            <a style="color: black;" role="button" data-toggle="collapse" href="#references2" aria-expanded="true" aria-controls="collapseReferences2">
+              {{lang 'seedbank::forms.references'}}
+            </a>
+          </h4>
+        </div>
+        <div id="references2" class="panel-collapse collapse" data-parent="#accordion2" role="tabpanel" aria-labelledby="headingReferences2">
+          <div class="panel-body">
+            <div class="row references">
+            {{#each item.references}}
+            <div class="item">
+              <a href="{{content}}">{{content}}</a>
+            </div>
+            {{/each}}
+            </div>
+          </div>
+        </div>
+      </div><!-- END Accordion References -->
+    </div>
+  </div>
+  </div>
   {{#if admin }}
-  <div class="row" style="padding-top: 24px; padding-bottom:24px; border-bottom: none;">
+  <div class="row">
     <div class="col-md-12">
       <button type="button" class="btn btn-warning btn-lg center-block">
         {{messages.change}}
       </button>
-      <!-- button type="button" class="btn btn-primary btn-lg">
-        {{messages.confirm}}
-      </button -->
     </div>
   </div>
   {{/if}}

@@ -60,6 +60,10 @@ class SeedBankController extends Controller {
       "tóxico ou nocivo", "social, simbólico, ritual", "outros usos especiais"
     ];
 
+    if ($item) {
+      $item->load(['pictures', 'family', 'uses', 'references']);
+    }
+
     return view('seedbank::modal_enciclform')
       ->with('formErrors', $formErrors)
       ->with('update', true)

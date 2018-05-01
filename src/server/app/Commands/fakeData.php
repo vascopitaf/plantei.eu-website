@@ -242,6 +242,8 @@ class fakeData extends Command implements SelfHandling {
 	public function handle()
 	{
 
+    $faker = \Faker\Factory::create();
+
 		if (! is_dir(storage_path('tmp'))) {
 			mkdir(storage_path('tmp'));
 		}

@@ -28,20 +28,39 @@ class AuthenticationServiceProvider extends ServiceProvider {
 		$this->registerViews();
 		$this->registerPolicies($gate);
 
-        $gate->define('update-seed', function ($user, $seed) {
-            return $user->id == $seed->user_id;
+    $gate->define('update-seed', function ($user, $seed) {
+        return $user->id == $seed->user_id;
 		});
-        $gate->define('reply-message', function ($user, $message) {
-			/*echo $user->id;
-			dd($message);*/
+    $gate->define('reply-message', function ($user, $message) {
 			if ($user->messages()->where('id', $message->id)->get()->toArray())
 			{
 				return true;
 			}
 			return false;
 		});
+		$gate->define(
+			'enciclopedia',
+			function ($user, $item) {
+				if ( $user->is_admin()) { return true; }
+				return $user->id == $item->user_id;
+			}
+		);
+		$gate->define(
+			'event',
+			function ($user, $item) {
+				if ( $user->is_admin()) { return true; }
+				return $user->id == $item->user_id;
+			}
+		);
+		$gate->define(
+			'sementeca',
+			function ($user, $item) {
+				if ( $user->is_admin()) { return true; }
+				return $user->id == $item->user_id;
+			}
+		);
 
-		
+
 	}
 
 	/**

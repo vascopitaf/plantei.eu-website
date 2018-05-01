@@ -210,6 +210,9 @@ class APIController extends Controller {
 					$this->validate($request, [
 						'common_name' => 'required',
 					], \Lang::get('seedbank::validation'));
+					if (Gate::denies('enciclopedia', false)){
+		        abort(403);
+		      }
 					if ($request->input('id')) {
 						// TODO: Updating check permissions
 						$item = \Caravel\Enciclopedia::find($request->input('id'));
