@@ -64,13 +64,14 @@ class SeedBankController extends Controller {
       ->with('formErrors', $formErrors)
       ->with('update', true)
       ->with('preview', true)
+      ->with('admin', \Auth::user()->is_admin())
       ->with('oldInput', $item )
       ->with('item', $item )
       ->with('categories', $use_categories )
       ->with('csrfToken', csrf_token())->render();
   }
 
-  public function getEnciclopedia($letter = null)
+  public function getEnciclopedia(Request $request, $letter = null)
   {
     $user = \Auth::user();
 
@@ -80,17 +81,17 @@ class SeedBankController extends Controller {
     $active = $letter;
 
     if ($active) {
-      $items = \Caravel\Enciclopedia::where('common_name', 'LIKE', $active . '%')
+      $items = \Caravel\Enciclopedia::where('common_name', 'ILIKE', $active . '%')
         ->orderBy('common_name');
       $path = '/' . $active;
     } else {
-      $items = \Caravel\Enciclopedia::orderBy('updated_at');
+      $items = \Caravel\Enciclopedia::orderBy('updated_at', 'desc');
       $path = "";
     }
 
     //$seeds = $user->seeds()->orderBy('updated_at', 'desc');
     //$pages = $seeds->paginate(5)->setPath('/seedbank/myseeds');
-    $paginated = $items->paginate(3)->setPath('/enciclopedia' . $path);
+    $paginated = $items->paginate(15)->setPath('/enciclopedia' . $path);
     //return view('seedbank::myseeds')
     foreach ($paginated->getCollection() as $item)
     {
@@ -107,7 +108,9 @@ class SeedBankController extends Controller {
       $alphabet[] = $letter;
     }
 
-    $modal_content = self::getEnciclopediaForm();
+    $item = \Caravel\Enciclopedia::find($request->input('id'));
+
+    $modal_content = self::getEnciclopediaForm($item);
 
     $use_categories = \Lang::get('seedbank::forms.category_types');
 

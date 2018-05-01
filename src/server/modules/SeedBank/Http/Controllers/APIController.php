@@ -206,19 +206,20 @@ class APIController extends Controller {
 		 * @return Collection
 		 */
 		public function postEnciclopedia (Request $request) {
-   			dd($request->input());
 				if ($request->input('_save', Null)) {
 					$this->validate($request, [
-						'name' => 'required',
+						'common_name' => 'required',
 					], \Lang::get('seedbank::validation'));
 					if ($request->input('id')) {
 						// TODO: Updating check permissions
-						$sementeca = \Caravel\Sementeca::find($request->input('id'));
-						$sementeca->update($request->input());
+						$item = \Caravel\Enciclopedia::find($request->input('id'));
+						$item->update($request->input());
 					} else {
-						$sementeca = \Caravel\Sementeca::create($request->input());
+						$item = new \Caravel\Enciclopedia($request->input());
+						$item->user_id = \Auth::user()->id;
+						$item->save();
 					}
-					return $sementeca;
+					return $item;
 				}
 		}
 

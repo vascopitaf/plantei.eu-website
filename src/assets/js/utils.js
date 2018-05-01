@@ -44,7 +44,9 @@ var clearForm = function (element) {
   element.find('input[name=_save]').val('1');
   // element.find('textarea').text('');
   $('form').find('textarea').each(function (i) {
-    tinymce.activeEditor.setContent("");
+    if (tinymce.activeEditor) {
+      tinymce.activeEditor.setContent("");
+    }
     $(this).val("");
   });
   element.find('select').prop('disabled', false);

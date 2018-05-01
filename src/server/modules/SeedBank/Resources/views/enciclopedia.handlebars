@@ -1,7 +1,9 @@
 {{> mainapp_start}}
     <div class="row header">
       <h1 style="float: left">{{lang 'seedbank::menu.encyclopedia'}}</h1>
+      {{#if admin}}
       <button type="button" class="btn btn-lg btn-success new-encicl" style="float: right; margin-right: 32px; margin-top: 16px;">{{ lang 'seedbank::buttons.newencicl' }}</button>
+      {{/if}}
     </div>
     <div class="row enciclopedia">
       <table>
@@ -38,7 +40,7 @@
 <script src="/js/enciclopedia.js" charset="utf-8"></script>
 
 <script>
-{{#if modal }}
+{{#if item }}
 $("#modal").modal('show');
 {{/if}}
 let use_categories = [

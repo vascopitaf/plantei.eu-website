@@ -6,7 +6,7 @@
       </div>
       <!-- div data-name="info" -->
         <div class="col-md-8">
-          <p data-name="latin_name">{{seed.latin_name}}</p>
+          <p data-name="common_name">{{item.common_name}}</p>
           <p data-name="quantity">!!200 gr. semente!!</p>
           <p data-name="availability">!!Disponível para troca!!</p>
           <p data-name="location">!!Pavia, Mora, Évora!!</p>
@@ -53,16 +53,16 @@
     </div>
     {{/each}}
   </div>
+  {{#if admin }}
   <div class="row" style="padding-top: 24px; padding-bottom:24px; border-bottom: none;">
     <div class="col-md-12">
-      {{#unless viewonly }}
       <button type="button" class="btn btn-warning btn-lg center-block">
         {{messages.change}}
       </button>
-      {{/unless}}
       <!-- button type="button" class="btn btn-primary btn-lg">
         {{messages.confirm}}
       </button -->
     </div>
   </div>
+  {{/if}}
 </div>
