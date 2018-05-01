@@ -225,24 +225,30 @@ class SeedBankController extends Controller {
     {
       $seed->load('family');
       $seed->load('pictures');
+      $seed->load('user');
     }
     $part = [ 'myseeds' => true ];
 
     $seed_id = $request->input('seed_id', null);
     $seed = \Caravel\Seed::find($seed_id);
+    $user_id = $request->input('user_id', null);
+
+
+
 
     $monthsTable = [];
     foreach (range(0, 11) as $number) {
       $monthsTable[$number] = false;
     }
     if ($seed) {
-      $seed->load(['months', 'species', 'variety', 'family', 'pictures']);
+      $seed->load(['months', 'species', 'variety', 'family', 'pictures', 'user']);
       foreach ( $seed->months as $month) {
         $monthsTable[$month->month - 1] = true;
       }
     };
 
-    $modal_content = view('seedbank::modal_seedpreview')
+    $modal_content = view('seedbank::modal_userseedpreview')
+      ->with('user_id', $user_id)
       ->with('preview', true)
       ->with('seed', $seed )
       ->with('monthstable', $monthsTable)
@@ -250,6 +256,7 @@ class SeedBankController extends Controller {
       ->with('csrfToken', csrf_token())->render();
 
     return view('seedbank::seeds', compact('part', 'modal_content'))
+      ->with('user_id', $user_id)
       ->with('pagination', \Lang::get('pagination'))
       ->with('paginated', $paginated)
       ->with('links', $paginated->render())
@@ -258,8 +265,31 @@ class SeedBankController extends Controller {
       ->with('active', ['seeds' => true]);
   }
 
-  public function mySeeds()
+  public function getUserSeeds(Request $request)
   {
+    $userToView = \Caravel\User::findOrFail($request->input('id'));
+
+    // View for seeds
+    $user = \Auth::user();
+    $seeds = $userToView->seeds()->where('available', true)->orderBy('updated_at', 'desc');
+    //$seeds = $user->seeds()->orderBy('updated_at', 'desc');
+    //$pages = $seeds->paginate(5)->setPath('/seedbank/myseeds');
+    $paginated = $seeds->paginate(15)->setPath('/seedbank/allseeds');
+    //return view('seedbank::myseeds')
+    foreach ($paginated->getCollection() as $seed)
+    {
+      $seed->load('family');
+      $seed->load('pictures');
+      $seed->load('user');
+    }
+
+    return view('seedbank::userseeds', compact('part', 'modal_content'))
+      ->with('pagination', \Lang::get('pagination'))
+      ->with('paginated', $paginated)
+      ->with('links', $paginated->render())
+      //->with('myseeds', $seeds->get())
+      ->with('modal', ($seed) )
+      ->with('active', ['seeds' => true]);
   }
 
   public function getMessages()

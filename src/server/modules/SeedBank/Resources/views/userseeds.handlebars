@@ -1,15 +1,19 @@
 {{> mainapp_start}}
     <div class="row">
-      <h1>{{choice 'seedbank::messages.seed' 2}}</h1>
+      <h1>[{{paginated.data.0.user.name}}] {{choice 'seedbank::messages.seed' 2}}</h1>
     </div>
     <div class="row content seeds">
       {{# each paginated.data }}
       <div class="col-sm-4">
-        <div data-seed_id="{{id}}">
+        <div data-seed_id="{{id}}" data-user_id="{{user.id}}">
           <img class="responsive" style="width: 150px; float:left; display:block;margin-right:12px;" src="{{#if pictures}}{{pictures.0.url}}{{else}}/images/planteieulogocinza.png{{/if}}" alt="">
-          <p style="font-weight: 800; text-decoration: underline;">{{user.name}}</p>
           <p style="font-weight: bold; font-size:14px;">{{common_name}}</p>
           <p style="font-style: oblique;">{{latin_name}}</p>
+          {{#if quantity}}
+          <p style="font-weight: 800; text-decoration: underline;">{{quantity}} {{units}}</p>
+          {{else}}
+          <p style="font-weight: 800; text-decoration: underline;">{{lang 'seedbank::messages.quantityunknown' }}</p>
+          {{/if}}
           <!-- p style="font-style: oblique;">{{../messages.family}}: {{family.name}}</p -->
         </div>
       </div>
@@ -25,16 +29,6 @@
 {{#if modal }}
 $("#modal").modal('show');
 {{/if}}
-{{#if user_id}}
-$('#modal').on('hide.bs.modal', function (e) {
-  if ( document.referrer.indexOf('/userseeds') !== -1 ) {
-    window.history.go(-1);
-  } else {
-    window.open('/seedbank/userseeds?id={{ user_id }}');
-  }
-});
-{{/if}}
-
 let parameters = [
   {"name": "seed_id", "value": "id"},
   {"name": "_id", "value": "id"},
@@ -59,7 +53,7 @@ let parameters = [
 $('.seeds div.col-sm-4 div').on('click', function () {
   //window.open('/seedbank/register/' + $(this).data('seed_id'), '_self');
   var seed_id = $(this).data('seed_id');
-  window.open('/seedbank/allseeds?seed_id=' + seed_id, '_self');
+  window.open('/seedbank/allseeds?seed_id=' + seed_id + '&user_id=' + $(this).data('user_id') , '_self');
   /*$.get("/seedbank/seed/" + seed_id, function (data) {
     //console.log(data)
     if (data.length == 0){

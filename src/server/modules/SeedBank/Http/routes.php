@@ -33,6 +33,7 @@ Route::group(['prefix' => 'seedbank', 'namespace' => 'Modules\SeedBank\Http\Cont
     Route::get('/horta', 'SeedBankController@getHorta');
     Route::get('/myseeds', 'SeedBankController@getMySeeds');
     Route::get('/allseeds', 'SeedBankController@getAllSeeds');
+    Route::get('/userseeds', 'SeedBankController@getUserSeeds');
     Route::get('/messages', 'SeedBankController@getMessages');
     Route::get('/register/{id?}', 'SeedBankController@getRegister');
     Route::post('/register/{id?}', 'SeedBankController@postRegister');

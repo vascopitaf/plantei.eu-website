@@ -1,0 +1,75 @@
+<div id="seed-preview"{{#unless preview }}  style="display:none;"{{/unless}}>
+  <!-- div class="row">
+    <h1 data-name="common_name">{{ seed.common_name }}</h1>
+  </div -->
+  <div class="row">
+    <div class="col-md-6" style="border-right: 2px solid black;">
+      <div data-name="files" class="col-md-4 cover">
+        <div class="img-content">
+          <img class="img-responsive" data-file-id="{{ seed.pictures.0.id }}" src="{{#if seed.pictures.0 }}{{ seed.pictures.0.url }}{{else}}/images/planteieulogocinza.png{{/if}}" alt="label" />'
+        </div>
+      </div>
+      <!-- div data-name="info" -->
+        <div class="col-md-8">
+          <a href="/seedbank/userseeds?id={{ seed.user_id }}" data-name="user_name" data-url="" style="text-decoration: underline;">{{seed.user.name}}</a>
+          <p data-name="latin_name">{{seed.latin_name}}</p>
+          <p data-name="quantity">{{#if seed.quantity}}{{seed.quantity}} {{seed.units}}{{/if}}</p>
+          <p data-name="availability">{{#if seed.available}}{{lang 'seedbank::forms.availableforswap'}}{{!-- else}}{{lang 'seedbank::forms.notavailableforswap'--}}{{/if}}</p>
+          <p data-name="location">{{seed.local}}</p>
+        </div>
+      <!-- /div -->
+    </div>
+    <div class="col-md-6">
+      <p>{{lang 'seedbank::messages.seedseason'}}</p>
+      <div  data-name="months">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td{{#if monthstable.0}} class="active"{{/if}}>{{lang 'seedbank::messages.monthjan' }}.</td>
+              <td{{#if monthstable.1}} class="active"{{/if}}>{{lang 'seedbank::messages.monthfeb' }}.</td>
+              <td{{#if monthstable.2}} class="active"{{/if}}>{{lang 'seedbank::messages.monthmar' }}.</td>
+              <td{{#if monthstable.3}} class="active"{{/if}}>{{lang 'seedbank::messages.monthapr' }}.</td>
+              <td{{#if monthstable.4}} class="active"{{/if}}>{{lang 'seedbank::messages.monthmay' }}.</td>
+              <td{{#if monthstable.5}} class="active"{{/if}}>{{lang 'seedbank::messages.monthjun' }}.</td>
+            </tr>
+            <tr>
+              <td{{#if monthstable.6}} class="active"{{/if}}>{{lang 'seedbank::messages.monthjul' }}.</td>
+              <td{{#if monthstable.7}} class="active"{{/if}}>{{lang 'seedbank::messages.monthaug' }}.</td>
+              <td{{#if monthstable.8}} class="active"{{/if}}>{{lang 'seedbank::messages.monthsep' }}.</td>
+              <td{{#if monthstable.9}} class="active"{{/if}}>{{lang 'seedbank::messages.monthoct' }}.</td>
+              <td{{#if monthstable.10}} class="active"{{/if}}>{{lang 'seedbank::messages.monthnov' }}.</td>
+              <td{{#if monthstable.11}} class="active"{{/if}}>{{lang 'seedbank::messages.monthdec' }}.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p data-name="untilharverst">{{#if seed.untilharvest}}{{choice 'seedbank::forms.untilharvest' seed.untilharvest months=seed.untilharvest}}{{/if}}</p>
+    </div>
+  </div>
+  <div class="row"{{#unless seed.desription}} style="display:none;"{{/unless}}>
+    <div data-name="description" data-parent="div">
+      {{{seed.description}}}
+    </div>
+  </div>
+  <div class="row pictures" style="/*margin-bottom:24px;*/{{#unless seed.pictures}} display: none;{{/unless}}">
+    {{#each seed.pictures}}
+    <div class="col-md-4" style="/*margin: 0 4px;  width: calc(33.3% - 12px);*/">
+      <div class="img-content">
+        <img class="img-responsive" data-file-id="{{ id }}" src="{{ url }}" alt="label" />
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  <div class="row" style="padding-top: 24px; padding-bottom:24px; border-bottom: none;">
+    <div class="col-md-12">
+      {{#unless viewonly }}
+      <button type="button" class="btn btn-warning btn-lg center-block">
+        {{lang 'seedbank::messages.change'}}
+      </button>
+      {{/unless}}
+      <!-- button type="button" class="btn btn-primary btn-lg">
+        {{messages.confirm}}
+      </button -->
+    </div>
+  </div>
+</div>

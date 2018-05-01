@@ -63,6 +63,10 @@ class Seed extends Model
   {
     return $this->hasMany('Caravel\SeedMedicine');
   }*/
+  public function user()
+  {
+    return $this->belongsTo('Caravel\User');
+  }
   public function variety()
   {
     return $this->belongsTo('Caravel\Variety');

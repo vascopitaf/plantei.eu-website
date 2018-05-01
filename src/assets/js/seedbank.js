@@ -1,7 +1,7 @@
 $(function () {
   $('#seeds tr').on('click', function () {
     var seed_id = $(this).data('seed_id');
-    window.open('/seedbank/allseeds?seed_id=' + seed_id, '_self')
+    window.open('/seedbank/allseeds?seed_id=' + seed_id, '_self');
   }).mouseover(function () {
     $(this).addClass('active');
   }).mouseout(function () {
