@@ -39,12 +39,13 @@ $('form').on('submit', function (){
       window.location = location.protocol + "//" + location.host + location.pathname +
         "?id=" + data.id;
     }
-
+    /*
     //console.log(data);
     previewseed(parameters, data);
 
     $("form").hide();
     $("#seed-preview").show();
+    */
   });
   return false;
 });

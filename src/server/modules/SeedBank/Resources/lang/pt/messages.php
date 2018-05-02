@@ -121,4 +121,9 @@ return [
     'createSementeca' => 'Regista sementeca',
     'newevent' => 'Evento Novo',
     'seedseason' => 'Época de sementeira',
+    'seedsfrom' => 'As sementes de :username (:place)',
+    'othermethod' => 'Outro método',
+    'recentlyAdded' => "Adicionadas recentemente",
+    'noContent' => 'Sem conteúdo',
+
 ];

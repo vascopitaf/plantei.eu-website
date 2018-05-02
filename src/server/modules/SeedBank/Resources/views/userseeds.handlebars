@@ -1,6 +1,6 @@
 {{> mainapp_start}}
     <div class="row">
-      <h1>[{{paginated.data.0.user.name}}] {{choice 'seedbank::messages.seed' 2}}</h1>
+      <h1>{{lang 'seedbank::messages.seedsfrom' username=paginated.data.0.user.name place=paginated.data.0.user.place_name }}</h1>
     </div>
     <div class="row content seeds">
       {{# each paginated.data }}

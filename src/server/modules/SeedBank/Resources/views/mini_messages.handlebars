@@ -1,4 +1,4 @@
-<h2>{{messages.messages}}</h2>
+<h2>{{lang 'seedbank::messages.messages' }}</h2>
   <table class="table" id="messages">
     <tbody>
       {{#each messenger}}
@@ -9,7 +9,7 @@
       </tr>
       {{else}}
       <tr>
-        <h4>No content</h4>
+        <h4>{{lang 'seedbank::messages.noContent' }}</h4>
       </tr>
       {{/each}}
     </tbody>

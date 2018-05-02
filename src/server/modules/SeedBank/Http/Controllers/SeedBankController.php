@@ -25,7 +25,7 @@ class SeedBankController extends Controller {
       ->orderBy('seeds.updated_at', 'desc')
       ->limit(3)->join('users', 'users.id', '=', 'user_id')
       ->select('seeds.id', 'seeds.common_name',
-        'users.name', 'users.email', 'user_id')
+        'users.name', 'users.email', 'user_id', 'seeds.place_name')
         ->get();
 
     $myseeds = \Caravel\Seed::where('user_id', $user->id)

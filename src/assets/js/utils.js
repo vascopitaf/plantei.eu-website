@@ -33,11 +33,18 @@ function getMoonPhase(year, month, day)
 
 /*
  * Clear all form data
+ * element : form jquery element
+ * keeplocation : boolean (if set 'element' must be too)
  */
 
-var clearForm = function (element) {
+var clearForm = function (element, keeplocation) {
+
   if (! element) {
     element = $('form');
+  }
+  if (! keeplocation ) {
+    window.history.pushState({}, document.title, location.protocol
+      + '//' + location.host + location.pathname);
   }
 
   element.find('input').not('[type=button], [type=checkbox], [type=submit], [type=reset], [type=radio], [name=_token]').val('');
@@ -55,6 +62,8 @@ var clearForm = function (element) {
     $(e).find('input[type=radio], input[type=checkbox]').prop('checked', false);
   });
   $('.row.validationErrors').empty();
+
+  /* empty image thumbnails */
   element.find('.files .col-md-4').each(function(i, e){
     if ( $(e).find('img').length ) {
       if (! $(e).find('.fileinput-button').length ) {
@@ -62,8 +71,7 @@ var clearForm = function (element) {
       }
     }
   });
-  window.history.pushState({}, document.title, location.protocol
-    + '//' + location.host + '/' + location.pathname);
+
 }
 
 /*

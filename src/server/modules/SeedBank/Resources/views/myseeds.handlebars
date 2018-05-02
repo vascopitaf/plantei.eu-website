@@ -1,10 +1,11 @@
 {{> mainapp_start}}
     <div class="row">
       <div class="col-md-6">
-        <h1>{{messages.myseeds}}</h1>
+        <h1>{{lang 'seedbank::messages.myseeds'}}</h1>
       </div>
       <div class="col-md-6">
         <ul class="buttons">
+          <li style="display:none;"><input type="text" name="searchseed" value=""></li>
           <li><a class="iconified exchanges pt"></a></li>
           <li><a class="iconified searchseed pt"></a></li>
           <li><a class="iconified delseed pt"></a></li>
@@ -12,15 +13,15 @@
         </ul>
       </div>
     </div>
-    <div class="row search">
-      <input type="text" name="searchseed" value="">
-    </div>
+    <!--div class="row search">
+
+    </div -->
     <div class="row content seeds">
       <table class="table" style="width: 100%">
         <thead>
           <tr>
             <th width="100px"></th>
-            <th>{{messages.name}},<br>{{messages.family}}</th>
+            <th>{{lang 'seedbank::messages.name' }},<br>{{lang 'seedbank::messages.family' }}</th>
             <th>ONDE E <br>QUANDO</th>
             <th>MÉTODO E <br> RECOLHA</th>
             <th>DISPONÍVEL <br> PARA TROCA</th>
@@ -33,15 +34,15 @@
             <td>
               <p style="font-weight: bold; font-size:14px;">{{common_name}}</p>
               <p style="font-style: oblique;">{{latin_name}}</p>
-              <p style="font-style: oblique;">{{../messages.family}}: {{family.name}}</p>
+              <p style="font-style: oblique;">{{lang 'seedbank::messages.family' }}: {{family.name}}</p>
             </td>
             <td><p>{{local}}</p>{{year}}<p></p></td>
-            <td>ḿetodo</td>
+            <td>{{#if direct}}{{lang 'seedbank::messages.directseeding'}}{{else}}{{lang 'seedbank::messages.othermethod' }}{{/if}}</td>
             <td>{{#if available}}{{lang 'seedbank::messages.yes'}}{{else}}{{lang 'seedbank::messages.no'}}{{/if}}</td>
           </tr>
           {{else}}
           <tr>
-            No Content
+            {{lang 'seedbank::messages.nocontent' }}
           </tr>
           {{/each}}
         </tbody>

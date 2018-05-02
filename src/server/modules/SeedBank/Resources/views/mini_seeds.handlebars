@@ -1,21 +1,21 @@
-<h2>{{messages.seed}}s</h2>
+<h2>{{choice 'seedbank::messages.seed' 2}}</h2>
   <table class="table" id="seeds">
     <!-- All seeds -->
     <thead>
       <tr>
-        <h4>{{messages.recentlyAdded}}recentlyAdded</h4>
+        <h4>{{lang 'seedbank::messages.recentlyAdded'}}</h4>
       </tr>
     </thead>
     <tbody>
       {{#each seeds}}
       <tr data-seed_id="{{id}}">
         <td>{{common_name}}</td>
-        <td>loc</td>
-        <td>user</td>
+        <td>{{site_name}}</td>
+        <td>{{name}}</td>
       </tr>
       {{else}}
       <tr>
-        <h4>{{messages.noContent}}noContent</h4>
+        <h4>{{lang 'seedbank::messages.noContent'}}</h4>
       </tr>
       {{/each}}
     </tbody>
@@ -24,7 +24,7 @@
     <!-- My seeds -->
     <thead>
       <tr>
-        <h4>{{messages.myseedBank}}myseedBank</h4>
+        <h4>{{lang 'seedbank::messages.myseeds'}}</h4>
       </tr>
     </thead>
     <tbody>
@@ -35,7 +35,7 @@
       </tr>
       {{else}}
       <tr>
-        <h4>{{messages.noContent}}noContent</h4>
+        <h4>{{lang 'seedbank::messages.noContent'}}</h4>
       </tr>
       {{/each}}
     </tbody>
