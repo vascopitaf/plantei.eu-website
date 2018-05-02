@@ -8,7 +8,7 @@ return [
     'exchanges' => 'Trocas',
     'logout' => 'Sair',
     'events' => 'Calendário',
-    'encyclopedia' => 'Enciclopédia',
+    'enciclopedia' => 'Enciclopédia',
     'seedshare' => 'Sementecas',
     'seeds' => 'Sementes',
     'admin' => 'Admin',

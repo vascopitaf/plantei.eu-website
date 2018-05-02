@@ -1,7 +1,8 @@
 server {
-  listen 5000;
+  listen 80;
+  server_name localhost behat.localhost;
 
-  root /planteieu/src/server/public;
+  root /var/www/src/server/public;
   index index.php;
 
 # Important for VirtualBox

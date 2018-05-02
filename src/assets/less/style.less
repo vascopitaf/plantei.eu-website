@@ -11,6 +11,15 @@ body {
   background: url("/images/pattern_transparent.png");
   background-color: @body-bg;
 }
+body.isadmin {
+  background-color: black;
+}
+body .isadmin {
+	display: none;
+}
+body.isadmin .isadmin {
+	display: inherit;
+}
 
 h1, h2,h3,h4,h5,h6 {
 	letter-spacing: 0.02em;
@@ -88,7 +97,7 @@ footer {
 	.box-shadow(0 2px 0 rgba(0,0,0,1));
 }
 .panel-default {
-	border: none; 
+	border: none;
 	> .panel-heading {
 		background-color: inherit;
   }
